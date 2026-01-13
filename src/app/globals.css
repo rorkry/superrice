@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+:root {
+  /* カラーパレット */
+  --color-bg: #FAFAF8;
+  --color-bg-warm: #F5F3EE;
+  --color-text: #2D2D2D;
+  --color-text-muted: #6B6B6B;
+  --color-accent: #8B7355;
+  --color-accent-gold: #C4A574;
+  --color-green: #5B7B4A;
+  --color-green-dark: #4A6A3A;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-mincho), "Shippori Mincho", "游明朝", "Yu Mincho", serif;
+}
+
+/* 和紙風テクスチャ背景 */
+.bg-washi {
+  background-image:
+    radial-gradient(ellipse at 20% 30%, rgba(245, 243, 238, 0.8) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(245, 243, 238, 0.6) 0%, transparent 50%);
+  background-color: var(--color-bg);
+}
+
+/* 縦書き */
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* セクション間の装飾ライン */
+.section-divider {
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, var(--color-accent), transparent);
+  margin: 0 auto;
+}
+
+/* 新米バッジ */
+.shinmai-badge {
+  background-color: var(--color-green);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* ゴールドアクセントテキスト */
+.text-gold {
+  color: var(--color-accent-gold);
+}
+
+/* シャドウ効果（白い商品の視認性向上） */
+.rice-shadow {
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.12));
+}
+
+/* ホバーアニメーション */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* カスタムスクロールバー */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 4px;
+}
