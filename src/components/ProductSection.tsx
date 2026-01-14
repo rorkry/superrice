@@ -60,21 +60,21 @@ function ProductCard({ product, index }: { product: (typeof products)[0]; index:
                             "product": {
                                 "styles": {
                                     "product": {
+                                        "text-align": "center",
                                         "@media (min-width: 601px)": {
                                             "max-width": "100%",
-                                            "margin-left": "0px",
-                                            "margin-bottom": "0px"
+                                            "margin-left": "0",
+                                            "margin-bottom": "50px"
                                         }
                                     },
                                     "button": {
+                                        "width": "100%",
+                                        "max-width": "300px",
+                                        "margin": "0 auto",
+                                        "padding": "15px 30px",
+                                        "font-weight": "bold",
                                         "font-family": "inherit",
                                         "font-size": "14px",
-                                        "padding-top": "14px",
-                                        "padding-bottom": "14px",
-                                        "text-align": "center",
-                                        "width": "100%",
-                                        "max-width": "400px",
-                                        "margin": "0 auto",
                                         ":hover": {
                                             "background-color": "#4A6A3A"
                                         },
@@ -82,31 +82,54 @@ function ProductCard({ product, index }: { product: (typeof products)[0]; index:
                                         ":focus": {
                                             "background-color": "#4A6A3A"
                                         },
-                                        "border-radius": "8px",
-                                        "padding-left": "24px",
-                                        "padding-right": "24px"
+                                        "border-radius": "8px"
                                     }
                                 },
                                 "contents": {
                                     "img": false,
                                     "title": false,
-                                    "price": false,
-                                    "quantityInput": true
+                                    "price": false
                                 },
-                                "buttonDestination": "modal",
                                 "text": {
                                     "button": "ご購入に進む"
                                 }
                             },
+                            "productSet": {
+                                "styles": {
+                                    "products": {
+                                        "@media (min-width: 601px)": {
+                                            "margin-left": "0"
+                                        }
+                                    }
+                                }
+                            },
                             "modalProduct": {
                                 "contents": {
-                                    "img": false,
-                                    "imgWithCarousel": true,
+                                    "img": true,
+                                    "imgWithCarousel": false,
+                                    "title": true,
+                                    "price": true,
                                     "button": false,
                                     "buttonWithQuantity": true
                                 },
+                                "styles": {
+                                    "product": {
+                                        "@media (min-width: 601px)": {
+                                            "max-width": "100%",
+                                            "margin-left": "0px",
+                                            "margin-bottom": "0px"
+                                        }
+                                    }
+                                },
                                 "text": {
-                                    "button": "チェックアウト"
+                                    "button": "チェックアウトへ"
+                                }
+                            },
+                            "modal": {
+                                "styles": {
+                                    "modal": {
+                                        "background-color": "#ffffff"
+                                    }
                                 }
                             },
                             "cart": {
@@ -114,7 +137,8 @@ function ProductCard({ product, index }: { product: (typeof products)[0]; index:
                                     "title": "買い物かご",
                                     "total": "小計",
                                     "empty": "カートが空になっています。",
-                                    "button": "ご購入に進む"
+                                    "notice": "",
+                                    "button": "購入手続きへ"
                                 }
                             },
                         },
@@ -179,7 +203,11 @@ function ProductCard({ product, index }: { product: (typeof products)[0]; index:
 
                 {/* Shopify Buy Button */}
                 {product.shopifyComponentId ? (
-                    <div id={product.shopifyComponentId} className="shopify-buy-button" />
+                    <div
+                        id={product.shopifyComponentId}
+                        className="shopify-buy-button"
+                        style={{ display: 'flex', justifyContent: 'center', width: '100%' }}
+                    />
                 ) : (
                     /* プレースホルダーボタン（Shopify設定待ち） */
                     <div className="shopify-buy-button-placeholder">
