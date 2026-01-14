@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { ShoppingCart } from "lucide-react";
 
 const products = [
@@ -15,6 +15,8 @@ const products = [
         price: "¥8,800",
         image: "/ricebag.png",
         popular: true,
+        shopifyProductId: "14929620435310",
+        shopifyComponentId: "product-component-1768379354680",
     },
     {
         id: 2,
@@ -23,12 +25,115 @@ const products = [
         type: "玄米",
         price: "¥19,800",
         image: "/ricebag.png",
+        shopifyProductId: "14929622991214",
+        shopifyComponentId: "product-component-1768379493293",
     },
 ];
 
 function ProductCard({ product, index }: { product: (typeof products)[0]; index: number }) {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-50px" });
+    const shopifyInitialized = useRef(false);
+
+    useEffect(() => {
+        // Shopify情報がない商品はスキップ
+        if (!product.shopifyProductId || !product.shopifyComponentId || shopifyInitialized.current) {
+            return;
+        }
+
+        // ShopifyBuyが読み込まれるまで待つ
+        const initShopify = () => {
+            if (typeof window !== 'undefined' && (window as any).ShopifyBuy) {
+                const ShopifyBuy = (window as any).ShopifyBuy;
+
+                const client = ShopifyBuy.buildClient({
+                    domain: 'x9eycg-yb.myshopify.com',
+                    storefrontAccessToken: '680b43c0e523431c58dbd29e5eb4661c',
+                });
+
+                ShopifyBuy.UI.onReady(client).then(function (ui: any) {
+                    ui.createComponent('product', {
+                        id: product.shopifyProductId,
+                        node: document.getElementById(product.shopifyComponentId),
+                        moneyFormat: '%C2%A5%7B%7Bamount_no_decimals%7D%7D',
+                        options: {
+                            "product": {
+                                "styles": {
+                                    "product": {
+                                        "@media (min-width: 601px)": {
+                                            "max-width": "100%",
+                                            "margin-left": "0px",
+                                            "margin-bottom": "0px"
+                                        }
+                                    },
+                                    "button": {
+                                        "font-family": "inherit",
+                                        "font-size": "14px",
+                                        "padding-top": "14px",
+                                        "padding-bottom": "14px",
+                                        ":hover": {
+                                            "background-color": "#4A6A3A"
+                                        },
+                                        "background-color": "#5B7B4A",
+                                        ":focus": {
+                                            "background-color": "#4A6A3A"
+                                        },
+                                        "border-radius": "8px",
+                                        "padding-left": "24px",
+                                        "padding-right": "24px"
+                                    }
+                                },
+                                "contents": {
+                                    "img": false,
+                                    "title": false,
+                                    "price": false
+                                },
+                                "buttonDestination": "checkout",
+                                "text": {
+                                    "button": "ご購入に進む"
+                                }
+                            },
+                            "modalProduct": {
+                                "contents": {
+                                    "img": false,
+                                    "imgWithCarousel": true,
+                                    "button": false,
+                                    "buttonWithQuantity": true
+                                },
+                                "text": {
+                                    "button": "カートに入れる"
+                                }
+                            },
+                            "cart": {
+                                "text": {
+                                    "title": "買い物かご",
+                                    "total": "小計",
+                                    "empty": "カートが空になっています。",
+                                    "button": "ご購入に進む"
+                                }
+                            },
+                        },
+                    });
+                });
+
+                shopifyInitialized.current = true;
+            }
+        };
+
+        // スクリプトが読み込まれていない場合は待つ
+        if ((window as any).ShopifyBuy) {
+            initShopify();
+        } else {
+            const checkInterval = setInterval(() => {
+                if ((window as any).ShopifyBuy) {
+                    initShopify();
+                    clearInterval(checkInterval);
+                }
+            }, 100);
+
+            return () => clearInterval(checkInterval);
+        }
+    }, [product.shopifyProductId, product.shopifyComponentId]);
 
     return (
         <motion.div
@@ -67,14 +172,20 @@ function ProductCard({ product, index }: { product: (typeof products)[0]; index:
                     <p className="text-sm text-[#5B7B4A] font-medium mt-1">送料込み</p>
                 </div>
 
-                {/* TODO: ここにShopifyのボタンコードを貼り付ける */}
-                {/* Shopify Buy Button Placeholder */}
-                <div className="shopify-buy-button-placeholder">
-                    <button className="w-full flex items-center justify-center gap-2 bg-[#5B7B4A] hover:bg-[#4A6A3A] text-white py-3 px-6 rounded-lg transition-colors duration-300">
-                        <ShoppingCart size={18} />
-                        <span className="tracking-wider">カートに入れる</span>
-                    </button>
-                </div>
+                {/* Shopify Buy Button */}
+                {product.shopifyComponentId ? (
+                    <div id={product.shopifyComponentId} className="shopify-buy-button" />
+                ) : (
+                    /* プレースホルダーボタン（Shopify設定待ち） */
+                    <div className="shopify-buy-button-placeholder">
+                        <button
+                            disabled
+                            className="w-full flex items-center justify-center gap-2 bg-gray-400 text-white py-3 px-6 rounded-lg cursor-not-allowed">
+                            <ShoppingCart size={18} />
+                            <span className="tracking-wider">準備中</span>
+                        </button>
+                    </div>
+                )}
             </div>
         </motion.div>
     );

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Shippori_Mincho } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const shipporiMincho = Shippori_Mincho({
@@ -20,6 +21,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
+      <head>
+        {/* Shopify Buy Button Script */}
+        <Script
+          src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"
+          strategy="lazyOnload"
+        />
+      </head>
       <body className={`${shipporiMincho.variable} font-serif antialiased`}>
         {children}
       </body>
