@@ -10,23 +10,18 @@ const products = [
     {
         id: 1,
         name: "福岡県産米",
-        weight: "5kg",
-        price: "¥4,000",
-        image: "/ricebag.png",
-    },
-    {
-        id: 2,
-        name: "福岡県産米",
         weight: "10kg",
-        price: "¥8,000",
+        type: "精米済",
+        price: "¥8,800",
         image: "/ricebag.png",
         popular: true,
     },
     {
-        id: 3,
+        id: 2,
         name: "福岡県産米",
         weight: "25kg",
-        price: "¥18,000",
+        type: "玄米",
+        price: "¥19,800",
         image: "/ricebag.png",
     },
 ];
@@ -62,9 +57,15 @@ function ProductCard({ product, index }: { product: (typeof products)[0]; index:
 
             {/* Product Info */}
             <div className="p-6 text-center">
-                <h3 className="text-lg text-[#2D2D2D] tracking-wider mb-1">{product.name}</h3>
-                <p className="text-2xl font-medium text-[#2D2D2D] mb-4">{product.weight}</p>
-                <p className="text-xl text-[#8B7355] font-medium mb-6">{product.price}</p>
+                <h3 className="text-lg text-[#2D2D2D] tracking-wider mb-2">{product.name}</h3>
+                <div className="flex items-center justify-center gap-2 mb-3">
+                    <p className="text-2xl font-medium text-[#2D2D2D]">{product.weight}</p>
+                    <span className="bg-[#5B7B4A] text-white text-xs px-2 py-1 rounded">{product.type}</span>
+                </div>
+                <div className="mb-6">
+                    <p className="text-2xl text-[#8B7355] font-bold">{product.price}</p>
+                    <p className="text-sm text-[#5B7B4A] font-medium mt-1">送料込み</p>
+                </div>
 
                 {/* TODO: ここにShopifyのボタンコードを貼り付ける */}
                 {/* Shopify Buy Button Placeholder */}
@@ -99,7 +100,7 @@ export default function ProductSection() {
                 </motion.div>
 
                 {/* Products Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto">
                     {products.map((product, index) => (
                         <ProductCard key={product.id} product={product} index={index} />
                     ))}
@@ -111,9 +112,9 @@ export default function ProductSection() {
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.5 }}
-                    className="text-center text-sm text-[#6B6B6B] mt-12"
+                    className="text-center text-sm text-[#5B7B4A] font-medium mt-12"
                 >
-                    ※ 送料は別途かかります。詳しくはカート画面をご確認ください。
+                    ※ 全て送料込みの価格です
                 </motion.p>
             </div>
         </section>
