@@ -88,3 +88,18 @@ body {
   background: var(--color-accent);
   border-radius: 4px;
 }
+
+/* Shopify Buy Button カスタムスタイル */
+.shopify-buy-button {
+  width: 100%;
+}
+
+.shopify-buy__btn {
+  width: 100% !important;
+  margin: 0 auto !important;
+  display: block !important;
+}
+
+.shopify-buy__product {
+  text-align: center !important;
+}

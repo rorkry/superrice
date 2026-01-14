@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail } from "lucide-react";
 
 export default function Footer() {
     return (
@@ -34,16 +34,8 @@ export default function Footer() {
                         <h4 className="text-lg tracking-wider mb-4">お問い合わせ</h4>
                         <div className="space-y-3 text-white/60 text-sm">
                             <div className="flex items-center gap-3">
-                                <Phone size={16} />
-                                <span>0120-XXX-XXX</span>
-                            </div>
-                            <div className="flex items-center gap-3">
                                 <Mail size={16} />
-                                <span>info@fukuoka-rice.example.com</span>
-                            </div>
-                            <div className="flex items-start gap-3">
-                                <MapPin size={16} className="mt-0.5" />
-                                <span>〒810-0001<br />福岡県福岡市中央区XX-XX</span>
+                                <span>katsuya.8776@icloud.com</span>
                             </div>
                         </div>
                     </motion.div>
@@ -57,7 +49,7 @@ export default function Footer() {
                     >
                         <h4 className="text-lg tracking-wider mb-4">リンク</h4>
                         <nav className="space-y-2 text-white/60 text-sm">
-                            <Link href="#" className="block hover:text-white transition-colors">
+                            <Link href="/tokushoho" className="block hover:text-white transition-colors">
                                 特定商取引法に基づく表記
                             </Link>
                             <Link href="#" className="block hover:text-white transition-colors">

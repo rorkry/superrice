@@ -71,6 +71,8 @@ function ProductCard({ product, index }: { product: (typeof products)[0]; index:
                                         "font-size": "14px",
                                         "padding-top": "14px",
                                         "padding-bottom": "14px",
+                                        "text-align": "center",
+                                        "width": "100%",
                                         ":hover": {
                                             "background-color": "#4A6A3A"
                                         },
