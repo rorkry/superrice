@@ -90,9 +90,10 @@ function ProductCard({ product, index }: { product: (typeof products)[0]; index:
                                 "contents": {
                                     "img": false,
                                     "title": false,
-                                    "price": false
+                                    "price": false,
+                                    "quantityInput": true
                                 },
-                                "buttonDestination": "checkout",
+                                "buttonDestination": "modal",
                                 "text": {
                                     "button": "ご購入に進む"
                                 }
@@ -105,7 +106,7 @@ function ProductCard({ product, index }: { product: (typeof products)[0]; index:
                                     "buttonWithQuantity": true
                                 },
                                 "text": {
-                                    "button": "カートに入れる"
+                                    "button": "チェックアウト"
                                 }
                             },
                             "cart": {
